@@ -18,6 +18,7 @@ const SecondBossActions = {
 	115: {msg: '左后踢(击退)'},
 	119: {msg: '跳跃(眩晕)'},
 	120: {msg: '前拳+后踢(击退)'},
+
 	316: {msg: '火焰(爆炸)'},
 	317: {msg: '水波(击飞)'},
 	318: {msg: '地毯(眩晕)'}
@@ -27,8 +28,8 @@ const ThirdBossActions = {
 	109: {msg: '前插(眩晕)'},
 	112: {msg: '后扫(击退)'},
 	301: {msg: '地刺(击飞)'},
-	303: {msg: '左←←←←', sign_degrees: 270, sign_distance: 200},
-	306: {msg: '→→→→右', sign_degrees: 90, sign_distance: 200},
+	303: {msg: '左←←←←', sign_degrees: 90, sign_distance: 50},
+	306: {msg: '→→→→右', sign_degrees: 270, sign_distance: 50},
 	309: {msg: '注视!!'},
 	315: {msg: '恐惧(吸血)'}
 };
