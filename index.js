@@ -16,7 +16,9 @@ const SecondBossActions = {
 //	109: {msg: '前砸(闪避)'},
 	111: {msg: '右后踢(击退)'},
 	115: {msg: '左后踢(击退)'},
+
 	119: {msg: '跳跃(眩晕)'},
+
 	120: {msg: '前拳+后踢(击退)'},
 
 	316: {msg: '火焰(爆炸)'},
@@ -25,12 +27,18 @@ const SecondBossActions = {
 };
 const ThirdBossActions = {
 	106: {msg: '前推(击退)'},
+
 	109: {msg: '前插(眩晕)'},
+
 	112: {msg: '后扫(击退)'},
+
 	301: {msg: '地刺(击飞)'},
-	303: {msg: '左←←←←', sign_degrees: 90, sign_distance: 50},
-	306: {msg: '→→→→右', sign_degrees: 270, sign_distance: 50},
+
+	303: {msg: '左←←←←', sign_degrees: 90, sign_distance: 100},
+	306: {msg: '→→→→右', sign_degrees: 270, sign_distance: 100},
+
 	309: {msg: '注视!!'},
+
 	315: {msg: '恐惧(吸血)'}
 };
 
@@ -133,24 +141,24 @@ module.exports = function ccGuide(d) {
 				if (whichboss==2 && SecondBossActions[skillid]) {
 					sendMessage(SecondBossActions[skillid].msg);
 					if (skillid === 318) {
-						Spawnitem(603, 20, 600);
-						Spawnitem(603, 40, 600);
-						Spawnitem(603, 60, 600);
-						Spawnitem(603, 80, 600);
-						Spawnitem(603, 100, 600);
-						Spawnitem(603, 120, 600);
-						Spawnitem(603, 140, 600);
-						Spawnitem(603, 160, 600);
-						Spawnitem(603, 180, 600);
-						Spawnitem(603, 200, 600);
-						Spawnitem(603, 220, 600);
-						Spawnitem(603, 240, 600);
-						Spawnitem(603, 260, 600);
-						Spawnitem(603, 280, 600);
-						Spawnitem(603, 300, 600);
-						Spawnitem(603, 320, 600);
-						Spawnitem(603, 340, 600);
-						Spawnitem(603, 360, 600);
+						Spawnitem(603, 20, 650);
+						Spawnitem(603, 40, 650);
+						Spawnitem(603, 60, 650);
+						Spawnitem(603, 80, 650);
+						Spawnitem(603, 100, 650);
+						Spawnitem(603, 120, 650);
+						Spawnitem(603, 140, 650);
+						Spawnitem(603, 160, 650);
+						Spawnitem(603, 180, 650);
+						Spawnitem(603, 200, 650);
+						Spawnitem(603, 220, 650);
+						Spawnitem(603, 240, 650);
+						Spawnitem(603, 260, 650);
+						Spawnitem(603, 280, 650);
+						Spawnitem(603, 300, 650);
+						Spawnitem(603, 320, 650);
+						Spawnitem(603, 340, 650);
+						Spawnitem(603, 360, 650);
 					}
 				}
 				if (whichboss==3 && ThirdBossActions[skillid]) {
@@ -255,8 +263,8 @@ module.exports = function ccGuide(d) {
 			loc : bossCurLocation,
 			w : r,
 			unk : 0,
-			ownerName : '安全',
-			message : '安全区'
+			ownerName : '提示',
+			message : '提示区'
 		});
 
 		setTimeout(DespawnThing, 5000, uid1, uid2);
