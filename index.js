@@ -164,7 +164,7 @@ module.exports = function ccGuide(d) {
 				if (!enabled || !insidezone || whichboss==0) return;
 				let sDungeonEventMessage = parseInt(event.message.replace('@dungeon:', ''));
 				if (whichboss==1) {
-					if (sDungeonEventMessage === 9783103 && sDungeonEventMessage === 9983103) {
+					if (sDungeonEventMessage === 9783103 || sDungeonEventMessage === 9983103) {
 						sendMessage('100能量鉴定!!');
 					}
 				}
