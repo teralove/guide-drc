@@ -13,7 +13,8 @@ const FirstBossActions = {
 };
 const SecondBossActions = {
 //	105: {msg: '皮鞭(击飞)'},
-//	109: {msg: '前砸(闪避)'},
+	109: {msg: '前砸(闪避)'},
+
 	111: {msg: '右后踢(击退)'},
 	115: {msg: '左后踢(击退)'},
 
@@ -145,6 +146,7 @@ module.exports = function ccGuide(d) {
 				if (whichboss==2 && SecondBossActions[skillid]) {
 					sendMessage(SecondBossActions[skillid].msg);
 					if (skillid === 318) {
+						// 2王 属性攻击 - 草地圈范围
 						Spawnitem(603, 20, 660);
 						Spawnitem(603, 40, 660);
 						Spawnitem(603, 60, 660);
@@ -169,7 +171,7 @@ module.exports = function ccGuide(d) {
 					sendMessage(ThirdBossActions[skillid].msg);
 					if (!warned) return;
 					if (skillid === 303 || skillid === 306) {
-						// 3王 前S后S 对称轴
+						// 3王 前S后S 对横向称轴
 						Spawnitem(603, 90, 25);
 						Spawnitem(603, 90, 50);
 						Spawnitem(603, 90, 75);
