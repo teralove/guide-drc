@@ -52,6 +52,7 @@ module.exports = function ccGuide(d) {
 		insidezone = false,
 		whichmode = 0,
 		whichboss = 0,
+		warned = true,
 		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
 
 	d.hook('S_LOAD_TOPO', 3, sLoadTopo);
@@ -109,6 +110,7 @@ module.exports = function ccGuide(d) {
 				if (!insidemap) return;
 
 				let bosshp = (event.curHp / event.maxHp);
+
 				if (bosshp <= 0) {
 					whichboss = 0;
 				}
@@ -165,9 +167,9 @@ module.exports = function ccGuide(d) {
 				}
 				if (whichboss==3 && ThirdBossActions[skillid]) {
 					sendMessage(ThirdBossActions[skillid].msg);
+					if (!warned) return;
 					if (skillid === 303 || skillid === 306) {
-						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
-						// 3王 前S后S 一字线
+						// 3王 前S后S 对称轴
 						Spawnitem(603, 90, 25);
 						Spawnitem(603, 90, 50);
 						Spawnitem(603, 90, 75);
@@ -209,6 +211,10 @@ module.exports = function ccGuide(d) {
 						Spawnitem(603, 270, 450);
 						Spawnitem(603, 270, 475);
 						Spawnitem(603, 270, 500);
+						// 3王 前S后S 光柱+告示
+						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
+						warned = false;//关闭提示
+						setTimeout(function() { warned = true;}, 5000);//等待5秒后开启提示
 					}
 				}
 			}
@@ -243,6 +249,7 @@ module.exports = function ccGuide(d) {
 		insidezone = false;
 		whichmode = 0;
 		whichboss = 0;
+		warned = true;
 	}
 
 	function sendMessage(msg) {
@@ -265,7 +272,7 @@ module.exports = function ccGuide(d) {
 			});
 		}
 	}
-	//二王地面提示(草地圆圈范围)
+	//二王地面提示(花朵圆圈范围)
 	function Spawnitem(item, degrees, radius) { //显示物品 偏移角度 半径距离
 		let r = null, rads = null, finalrad = null, spawnx = null, spawny = null, pos = null;
 
@@ -290,7 +297,7 @@ module.exports = function ccGuide(d) {
 		uid0--;
 	}
 
-	function Despawn(uid_arg0) { //消除草地
+	function Despawn(uid_arg0) { //消除花朵
 		d.toClient('S_DESPAWN_COLLECTION', 2, {
 			gameId : uid_arg0
 		});
