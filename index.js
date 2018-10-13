@@ -34,8 +34,8 @@ const ThirdBossActions = {
 
 	301: {msg: '地刺(击飞)'},
 
-	303: {msg: '左←←←←', sign_degrees: 90, sign_distance: 100},
-	306: {msg: '→→→→右', sign_degrees: 270, sign_distance: 100},
+	303: {msg: '→→→→右', sign_degrees: 100, sign_distance: 150},
+	306: {msg: '左←←←←', sign_degrees: 280, sign_distance: 150},
 
 	309: {msg: '注视!!'},
 
@@ -51,7 +51,7 @@ module.exports = function ccGuide(d) {
 		insidezone = false,
 		whichmode = 0,
 		whichboss = 0,
-		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999, uid3 = 699999999;
+		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
 
 	d.hook('S_LOAD_TOPO', 3, sLoadTopo);
 
@@ -141,31 +141,72 @@ module.exports = function ccGuide(d) {
 				if (whichboss==2 && SecondBossActions[skillid]) {
 					sendMessage(SecondBossActions[skillid].msg);
 					if (skillid === 318) {
-						Spawnitem(603, 20, 650);
-						Spawnitem(603, 40, 650);
-						Spawnitem(603, 60, 650);
-						Spawnitem(603, 80, 650);
-						Spawnitem(603, 100, 650);
-						Spawnitem(603, 120, 650);
-						Spawnitem(603, 140, 650);
-						Spawnitem(603, 160, 650);
-						Spawnitem(603, 180, 650);
-						Spawnitem(603, 200, 650);
-						Spawnitem(603, 220, 650);
-						Spawnitem(603, 240, 650);
-						Spawnitem(603, 260, 650);
-						Spawnitem(603, 280, 650);
-						Spawnitem(603, 300, 650);
-						Spawnitem(603, 320, 650);
-						Spawnitem(603, 340, 650);
-						Spawnitem(603, 360, 650);
+						Spawnitem(603, 20, 660);
+						Spawnitem(603, 40, 660);
+						Spawnitem(603, 60, 660);
+						Spawnitem(603, 80, 660);
+						Spawnitem(603, 100, 660);
+						Spawnitem(603, 120, 660);
+						Spawnitem(603, 140, 660);
+						Spawnitem(603, 160, 660);
+						Spawnitem(603, 180, 660);
+						Spawnitem(603, 200, 660);
+						Spawnitem(603, 220, 660);
+						Spawnitem(603, 240, 660);
+						Spawnitem(603, 260, 660);
+						Spawnitem(603, 280, 660);
+						Spawnitem(603, 300, 660);
+						Spawnitem(603, 320, 660);
+						Spawnitem(603, 340, 660);
+						Spawnitem(603, 360, 660);
 					}
 				}
 				if (whichboss==3 && ThirdBossActions[skillid]) {
 					sendMessage(ThirdBossActions[skillid].msg);
 					if (skillid === 303 || skillid === 306) {
 						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
-						lastbossorbs(event, 5000);
+						// 3王 前S后S 一字线
+						Spawnitem(603, 90, 25);
+						Spawnitem(603, 90, 50);
+						Spawnitem(603, 90, 75);
+						Spawnitem(603, 90, 100);
+						Spawnitem(603, 90, 125);
+						Spawnitem(603, 90, 150);
+						Spawnitem(603, 90, 175);
+						Spawnitem(603, 90, 200);
+						Spawnitem(603, 90, 225);
+						Spawnitem(603, 90, 250);
+						Spawnitem(603, 90, 275);
+						Spawnitem(603, 90, 300);
+						Spawnitem(603, 90, 325);
+						Spawnitem(603, 90, 350);
+						Spawnitem(603, 90, 375);
+						Spawnitem(603, 90, 400);
+						Spawnitem(603, 90, 425);
+						Spawnitem(603, 90, 450);
+						Spawnitem(603, 90, 475);
+						Spawnitem(603, 90, 500);
+
+						Spawnitem(603, 270, 25);
+						Spawnitem(603, 270, 50);
+						Spawnitem(603, 270, 75);
+						Spawnitem(603, 270, 100);
+						Spawnitem(603, 270, 125);
+						Spawnitem(603, 270, 150);
+						Spawnitem(603, 270, 175);
+						Spawnitem(603, 270, 200);
+						Spawnitem(603, 270, 225);
+						Spawnitem(603, 270, 250);
+						Spawnitem(603, 270, 275);
+						Spawnitem(603, 270, 300);
+						Spawnitem(603, 270, 325);
+						Spawnitem(603, 270, 350);
+						Spawnitem(603, 270, 375);
+						Spawnitem(603, 270, 400);
+						Spawnitem(603, 270, 425);
+						Spawnitem(603, 270, 450);
+						Spawnitem(603, 270, 475);
+						Spawnitem(603, 270, 500);
 					}
 				}
 			}
@@ -219,7 +260,7 @@ module.exports = function ccGuide(d) {
 		}
 	}
 	//二王地面提示(草地圆圈范围)
-	function Spawnitem(item, degrees, radius) { //显示物品 持续时间 偏移角度 半径距离
+	function Spawnitem(item, degrees, radius) { //显示物品 偏移角度 半径距离
 		let r = null, rads = null, finalrad = null, spawnx = null, spawny = null, pos = null;
 
 		r = bossCurAngle - Math.PI;
@@ -292,79 +333,6 @@ module.exports = function ccGuide(d) {
 		d.toClient('S_DESPAWN_DROPITEM', 4, {
 			gameId: uid_arg2
 		});
-	}
-
-	function lastbossorbs(pos, timer) { // 3王 飞天 十字线
-		spawn2(603, timer, 0, 25, pos);
-		spawn2(603, timer, 0, 50, pos);
-		spawn2(603, timer, 0, 75, pos);
-		spawn2(603, timer, 0, 100, pos);
-		spawn2(603, timer, 0, 125, pos);
-		spawn2(603, timer, 0, 150, pos);
-		spawn2(603, timer, 0, 175, pos);
-		spawn2(603, timer, 0, 200, pos);
-		spawn2(603, timer, 0, 225, pos);
-		spawn2(603, timer, 0, 250, pos);
-		spawn2(603, timer, 0, 275, pos);
-		spawn2(603, timer, 0, 300, pos);
-		spawn2(603, timer, 0, 325, pos);
-		spawn2(603, timer, 0, 350, pos);
-		spawn2(603, timer, 0, 375, pos);
-		spawn2(603, timer, 0, 400, pos);
-		spawn2(603, timer, 0, 425, pos);
-		spawn2(603, timer, 0, 450, pos);
-		spawn2(603, timer, 0, 475, pos);
-		spawn2(603, timer, 0, 500, pos);
-
-		spawn2(603, timer, 180, 25, pos);
-		spawn2(603, timer, 180, 50, pos);
-		spawn2(603, timer, 180, 75, pos);
-		spawn2(603, timer, 180, 100, pos);
-		spawn2(603, timer, 180, 125, pos);
-		spawn2(603, timer, 180, 150, pos);
-		spawn2(603, timer, 180, 175, pos);
-		spawn2(603, timer, 180, 200, pos);
-		spawn2(603, timer, 180, 225, pos);
-		spawn2(603, timer, 180, 250, pos);
-		spawn2(603, timer, 180, 275, pos);
-		spawn2(603, timer, 180, 300, pos);
-		spawn2(603, timer, 180, 325, pos);
-		spawn2(603, timer, 180, 350, pos);
-		spawn2(603, timer, 180, 375, pos);
-		spawn2(603, timer, 180, 400, pos);
-		spawn2(603, timer, 180, 425, pos);
-		spawn2(603, timer, 180, 450, pos);
-		spawn2(603, timer, 180, 475, pos);
-		spawn2(603, timer, 180, 500, pos);
-	}
-
-	function spawn2(item, time, degrees, radius, loca) {
-		let r = null,
-			rads = null,
-			finalrad = null,
-			spawnx = null,
-			spawny = null,
-			pos = null;
-
-		r = loca.w;
-		rads = (degrees * Math.PI/180);
-		finalrad = r - rads;
-		spawnx = loca.loc.x + radius * Math.cos(finalrad);
-		spawny = loca.loc.y + radius * Math.sin(finalrad);
-		pos = {x:spawnx,y:spawny};
-
-		d.toClient('S_SPAWN_COLLECTION', 4, {
-			gameId : uid3,
-			id : item,
-			amount : 1,
-			loc : new Vec3(pos.x, pos.y, loca.loc.z),
-			w : r,
-			unk1 : 0,
-			unk2 : 0
-		});
-
-		setTimeout(Despawn, time, uid3)
-		uid3--;
 	}
 
 }
