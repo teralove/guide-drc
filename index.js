@@ -51,7 +51,7 @@ module.exports = function ccGuide(d) {
 		insidezone = false,
 		whichmode = 0,
 		whichboss = 0,
-		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
+		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999, uid3 = 699999999;
 
 	d.hook('S_LOAD_TOPO', 3, sLoadTopo);
 
@@ -165,6 +165,7 @@ module.exports = function ccGuide(d) {
 					sendMessage(ThirdBossActions[skillid].msg);
 					if (skillid === 303 || skillid === 306) {
 						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
+						lastbossorbs(event, 5000);
 					}
 				}
 			}
@@ -292,4 +293,78 @@ module.exports = function ccGuide(d) {
 			gameId: uid_arg2
 		});
 	}
+
+	function lastbossorbs(pos, timer) { // 3王 飞天 十字线
+		spawn2(603, timer, 0, 25, pos);
+		spawn2(603, timer, 0, 50, pos);
+		spawn2(603, timer, 0, 75, pos);
+		spawn2(603, timer, 0, 100, pos);
+		spawn2(603, timer, 0, 125, pos);
+		spawn2(603, timer, 0, 150, pos);
+		spawn2(603, timer, 0, 175, pos);
+		spawn2(603, timer, 0, 200, pos);
+		spawn2(603, timer, 0, 225, pos);
+		spawn2(603, timer, 0, 250, pos);
+		spawn2(603, timer, 0, 275, pos);
+		spawn2(603, timer, 0, 300, pos);
+		spawn2(603, timer, 0, 325, pos);
+		spawn2(603, timer, 0, 350, pos);
+		spawn2(603, timer, 0, 375, pos);
+		spawn2(603, timer, 0, 400, pos);
+		spawn2(603, timer, 0, 425, pos);
+		spawn2(603, timer, 0, 450, pos);
+		spawn2(603, timer, 0, 475, pos);
+		spawn2(603, timer, 0, 500, pos);
+
+		spawn2(603, timer, 180, 25, pos);
+		spawn2(603, timer, 180, 50, pos);
+		spawn2(603, timer, 180, 75, pos);
+		spawn2(603, timer, 180, 100, pos);
+		spawn2(603, timer, 180, 125, pos);
+		spawn2(603, timer, 180, 150, pos);
+		spawn2(603, timer, 180, 175, pos);
+		spawn2(603, timer, 180, 200, pos);
+		spawn2(603, timer, 180, 225, pos);
+		spawn2(603, timer, 180, 250, pos);
+		spawn2(603, timer, 180, 275, pos);
+		spawn2(603, timer, 180, 300, pos);
+		spawn2(603, timer, 180, 325, pos);
+		spawn2(603, timer, 180, 350, pos);
+		spawn2(603, timer, 180, 375, pos);
+		spawn2(603, timer, 180, 400, pos);
+		spawn2(603, timer, 180, 425, pos);
+		spawn2(603, timer, 180, 450, pos);
+		spawn2(603, timer, 180, 475, pos);
+		spawn2(603, timer, 180, 500, pos);
+	}
+
+	function spawn2(item, time, degrees, radius, loca) {
+		let r = null,
+			rads = null,
+			finalrad = null,
+			spawnx = null,
+			spawny = null,
+			pos = null;
+
+		r = loca.w;
+		rads = (degrees * Math.PI/180);
+		finalrad = r - rads;
+		spawnx = loca.loc.x + radius * Math.cos(finalrad);
+		spawny = loca.loc.y + radius * Math.sin(finalrad);
+		pos = {x:spawnx,y:spawny};
+
+		d.toClient('S_SPAWN_COLLECTION', 4, {
+			gameId : uid3,
+			id : item,
+			amount : 1,
+			loc : new Vec3(pos.x, pos.y, loca.loc.z),
+			w : r,
+			unk1 : 0,
+			unk2 : 0
+		});
+
+		setTimeout(Despawn, time, uid3)
+		uid3--;
+	}
+
 }
