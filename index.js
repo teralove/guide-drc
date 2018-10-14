@@ -13,7 +13,7 @@ const FirstBossActions = {
 };
 const SecondBossActions = {
 //	105: {msg: '皮鞭(击飞)'},
-	109: {msg: '前砸(闪避)'},
+//	109: {msg: '前砸(闪避)'},
 
 	111: {msg: '右后踢(击退)'},
 	115: {msg: '左后踢(击退)'},
@@ -35,8 +35,8 @@ const ThirdBossActions = {
 
 	301: {msg: '地刺(击飞)'},
 
-	303: {msg: '→→→→右', sign_degrees: 100, sign_distance: 150},
-	306: {msg: '左←←←←', sign_degrees: 280, sign_distance: 150},
+	303: {msg: '→→→→右', sign_degrees: 80, sign_distance: 250},
+	306: {msg: '左←←←←', sign_degrees: 290, sign_distance: 250},
 
 	309: {msg: '注视!!'},
 
@@ -53,7 +53,6 @@ module.exports = function ccGuide(d) {
 		insidezone = false,
 		whichmode = 0,
 		whichboss = 0,
-		warned = true,
 		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
 
 	d.hook('S_LOAD_TOPO', 3, sLoadTopo);
@@ -168,8 +167,6 @@ module.exports = function ccGuide(d) {
 					}
 				}
 				if (whichboss==3 && ThirdBossActions[skillid]) {
-					sendMessage(ThirdBossActions[skillid].msg);
-					if (!warned) return;
 					if (skillid === 303 || skillid === 306) {
 						// 3王 前S后S 对横向称轴
 						Spawnitem(603, 90, 25);
@@ -215,9 +212,8 @@ module.exports = function ccGuide(d) {
 						Spawnitem(603, 270, 500);
 						// 3王 前S后S 光柱+告示
 						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
-						warned = false;//关闭提示
-						setTimeout(function() { warned = true;}, 5000);//等待5秒后开启提示
 					}
+					sendMessage(ThirdBossActions[skillid].msg);
 				}
 			}
 
@@ -251,7 +247,6 @@ module.exports = function ccGuide(d) {
 		insidezone = false;
 		whichmode = 0;
 		whichboss = 0;
-		warned = true;
 	}
 
 	function sendMessage(msg) {
