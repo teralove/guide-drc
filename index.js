@@ -37,7 +37,7 @@ const ThirdBossActions = {
 	301: {msg: '地刺(击飞)'},
 
 	303: {msg: '→→→→右', sign_degrees: 80, sign_distance: 250},
-	306: {msg: '左←←←←', sign_degrees: 290, sign_distance: 250},
+	306: {msg: '左←←←←', sign_degrees: 280, sign_distance: 250},
 
 	309: {msg: '注视!!'},
 
@@ -188,8 +188,27 @@ module.exports = function ccGuide(d) {
 					if ( isTank && skillid === 112) return; // 坦克职业 不提示的技能
 					sendMessage(ThirdBossActions[skillid].msg);
 
+					// 3王 前S后S 弧线
+					if (skillid === 303) {
+						Spawnitem(603, 80, 250);
+						Spawnitem(603, 70, 250);
+						Spawnitem(603, 60, 250);
+
+						Spawnitem(603, 260, 250);
+						Spawnitem(603, 250, 250);
+						Spawnitem(603, 240, 250);
+					}
+					if (skillid === 306) {
+						Spawnitem(603, 100, 250);
+						Spawnitem(603, 110, 250);
+						Spawnitem(603, 120, 250);
+
+						Spawnitem(603, 280, 250);
+						Spawnitem(603, 290, 250);
+						Spawnitem(603, 300, 250);
+					}
+					// 3王 前S后S 横向对称轴
 					if (skillid === 303 || skillid === 306) {
-						// 3王 前S后S 横向对称轴
 						Spawnitem(603, 90, 25);
 						Spawnitem(603, 90, 50);
 						Spawnitem(603, 90, 75);
@@ -289,7 +308,7 @@ module.exports = function ccGuide(d) {
 			});
 		}
 	}
-	//二王地面提示(花朵圆圈范围)
+	//地面提示(花朵)
 	function Spawnitem(item, degrees, radius) { //显示物品 偏移角度 半径距离
 		let r = null, rads = null, finalrad = null, spawnx = null, spawny = null, pos = null;
 
@@ -313,13 +332,13 @@ module.exports = function ccGuide(d) {
 		setTimeout(Despawn, 5000, uid0)
 		uid0--;
 	}
-
-	function Despawn(uid_arg0) { //消除花朵
+	//消除花朵
+	function Despawn(uid_arg0) {
 		d.toClient('S_DESPAWN_COLLECTION', 2, {
 			gameId : uid_arg0
 		});
 	}
-	//三王地面提示(光柱+告示牌)
+	//地面提示(光柱+告示牌)
 	function SpawnThing(degrees, radius, times) { //偏移角度 半径距离 持续时间
 		let r = null, rads = null, finalrad = null, pos = null;
 
@@ -354,8 +373,8 @@ module.exports = function ccGuide(d) {
 		});
 		uid2--;
 	}
-
-	function DespawnThing(uid_arg1, uid_arg2) { //消除 光柱+告示牌
+	//消除 光柱+告示牌
+	function DespawnThing(uid_arg1, uid_arg2) {
 		d.toClient('S_DESPAWN_BUILD_OBJECT', 2, {
 			gameId : uid_arg1,
 			unk : 0

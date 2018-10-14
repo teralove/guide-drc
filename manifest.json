@@ -2,8 +2,7 @@
 	"files": {
 		"LICENSE": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
 		"README.md": "ebcc1e211a6dbe3244ac1a27026942693fdeef81478a914d60d4d97b92d82213",
-		"config.json": "699f7c4dcbb573b4faa936d385e1863c0e3da18b68f1c1cadb152d269132627f",
-		"index.js": "e0921445e6c0e252cfc4d9cf9cfdd7435e66172e8b084ba235521ad44abfc826",
+		"index.js": "642f687868a98dbe1dd44c5db01a3a354dd4ed1ee846df88f243dd06a2848d6e",
 		"module.json": "1653b391fb2cf2fbaddccb0a08abca4c06925567bde72e5070aaadda0895474e"
 	},
 	"defs": {
