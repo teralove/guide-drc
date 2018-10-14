@@ -7,13 +7,14 @@ const BossID = [1000, 2000, 3000];
 
 const FirstBossActions = {
 	108: {msg: '后跳(眩晕)'},
+	109: {msg: '后扫(击退)'},
 	119: {msg: '蓄力捶地'},
 
 	127: {msg: '雷电!!'}
 };
 const SecondBossActions = {
 //	105: {msg: '皮鞭(击飞)'},
-//	109: {msg: '前砸(闪避)'},
+	110: {msg: '前砸(闪避)'},
 
 	111: {msg: '右后踢(击退)'},
 	115: {msg: '左后踢(击退)'},
@@ -49,21 +50,21 @@ module.exports = function ccGuide(d) {
 		streamenabled = config.streamenabled,
 		msgcolour = config.msgcolour,
 
+		isTank = false,
 		insidemap = false,
 		insidezone = false,
 		whichmode = 0,
 		whichboss = 0,
 		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
 
-	d.hook('S_LOAD_TOPO', 3, sLoadTopo);
-
 	d.command.add('ccinfo', (arg) => {
-		d.command.message('模块开关: '.clr('00FFFF') + enabled);
+		d.command.message('模块开关: ' + `${enabled}`.clr('00FFFF'));
 		d.command.message('副本地图: ' + insidemap);
 		d.command.message('区域位置: ' + insidezone);
 		d.command.message('副本难度: ' + whichmode);
 		d.command.message('副本首领: ' + whichboss);
-		d.command.message('发送通知 ' + (sendToParty ? '组队'.clr('56B4E9') : '自己'.clr('E69F00')));
+		d.command.message('发送通知 ' + (sendToParty ? '真实组队'.clr('56B4E9') : '仅自己见'.clr('E69F00')));
+		d.command.message('职业分类 ' + (isTank ? '坦克'.clr('00FFFF') : '打手'.clr('FF0000')));
 		sendMessage('test');
 	})
 	d.command.add('ccg', (arg) => {
@@ -86,6 +87,18 @@ module.exports = function ccGuide(d) {
 			}
 		}
 	});
+
+	d.hook('S_LOGIN', 10, sLogin)
+	d.hook('S_LOAD_TOPO', 3, sLoadTopo);
+
+	function sLogin(event) {
+		let job = (event.templateId - 10101) % 100;
+		if (job === 1 || job === 10) {
+			isTank = true;
+		} else {
+			isTank = false;
+		}
+	}
 
 	function sLoadTopo(event) {
 		if (event.zone === mapID[0]) {								
@@ -140,10 +153,14 @@ module.exports = function ccGuide(d) {
 				bossCurAngle = event.w;
 
 				if (whichboss==1 && FirstBossActions[skillid]) {
+					if (!isTank && skillid === 119) return; // 打手职业 不提示的技能
 					sendMessage(FirstBossActions[skillid].msg);
 				}
 				if (whichboss==2 && SecondBossActions[skillid]) {
+					if (!isTank && skillid === 110) return; // 打手职业 不提示的技能
+					if ( isTank && (skillid === 111 || skillid === 115)) return; // 坦克职业 不提示的技能
 					sendMessage(SecondBossActions[skillid].msg);
+
 					if (skillid === 318) {
 						// 2王 属性攻击 - 草地圈范围
 						Spawnitem(603, 20, 660);
@@ -167,8 +184,12 @@ module.exports = function ccGuide(d) {
 					}
 				}
 				if (whichboss==3 && ThirdBossActions[skillid]) {
+					if (!isTank && (skillid === 106 || skillid === 109)) return; // 打手职业 不提示的技能
+					if ( isTank && skillid === 112) return; // 坦克职业 不提示的技能
+					sendMessage(ThirdBossActions[skillid].msg);
+
 					if (skillid === 303 || skillid === 306) {
-						// 3王 前S后S 对横向称轴
+						// 3王 前S后S 横向对称轴
 						Spawnitem(603, 90, 25);
 						Spawnitem(603, 90, 50);
 						Spawnitem(603, 90, 75);
@@ -210,10 +231,9 @@ module.exports = function ccGuide(d) {
 						Spawnitem(603, 270, 450);
 						Spawnitem(603, 270, 475);
 						Spawnitem(603, 270, 500);
-						// 3王 前S后S 光柱+告示
-						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
+						// 3王 前S后S 光柱+告示牌
+						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance, 5000);
 					}
-					sendMessage(ThirdBossActions[skillid].msg);
 				}
 			}
 
@@ -300,7 +320,7 @@ module.exports = function ccGuide(d) {
 		});
 	}
 	//三王地面提示(光柱+告示牌)
-	function SpawnThing(degrees, radius) { //偏移角度 半径距离
+	function SpawnThing(degrees, radius, times) { //偏移角度 半径距离 持续时间
 		let r = null, rads = null, finalrad = null, pos = null;
 
 		r = bossCurAngle - Math.PI;
@@ -319,7 +339,7 @@ module.exports = function ccGuide(d) {
 			message : '提示区'
 		});
 
-		setTimeout(DespawnThing, 5000, uid1, uid2);
+		setTimeout(DespawnThing, times, uid1, uid2);
 		uid1--;
 
 		bossCurLocation.z = bossCurLocation.z - 100;
@@ -335,7 +355,7 @@ module.exports = function ccGuide(d) {
 		uid2--;
 	}
 
-	function DespawnThing(uid_arg1, uid_arg2) { //消除 光柱+告示
+	function DespawnThing(uid_arg1, uid_arg2) { //消除 光柱+告示牌
 		d.toClient('S_DESPAWN_BUILD_OBJECT', 2, {
 			gameId : uid_arg1,
 			unk : 0
