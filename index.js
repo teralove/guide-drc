@@ -163,24 +163,24 @@ module.exports = function ccGuide(d) {
 
 					if (skillid === 318) {
 						// 2王 属性攻击 - 草地圈范围
-						Spawnitem(603, 20, 660);
-						Spawnitem(603, 40, 660);
-						Spawnitem(603, 60, 660);
-						Spawnitem(603, 80, 660);
-						Spawnitem(603, 100, 660);
-						Spawnitem(603, 120, 660);
-						Spawnitem(603, 140, 660);
-						Spawnitem(603, 160, 660);
-						Spawnitem(603, 180, 660);
-						Spawnitem(603, 200, 660);
-						Spawnitem(603, 220, 660);
-						Spawnitem(603, 240, 660);
-						Spawnitem(603, 260, 660);
-						Spawnitem(603, 280, 660);
-						Spawnitem(603, 300, 660);
-						Spawnitem(603, 320, 660);
-						Spawnitem(603, 340, 660);
-						Spawnitem(603, 360, 660);
+						Spawnitem(603, 20, 670);
+						Spawnitem(603, 40, 670);
+						Spawnitem(603, 60, 670);
+						Spawnitem(603, 80, 670);
+						Spawnitem(603, 100, 670);
+						Spawnitem(603, 120, 670);
+						Spawnitem(603, 140, 670);
+						Spawnitem(603, 160, 670);
+						Spawnitem(603, 180, 670);
+						Spawnitem(603, 200, 670);
+						Spawnitem(603, 220, 670);
+						Spawnitem(603, 240, 670);
+						Spawnitem(603, 260, 670);
+						Spawnitem(603, 280, 670);
+						Spawnitem(603, 300, 670);
+						Spawnitem(603, 320, 670);
+						Spawnitem(603, 340, 670);
+						Spawnitem(603, 360, 670);
 					}
 				}
 				if (whichboss==3 && ThirdBossActions[skillid]) {
