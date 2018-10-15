@@ -39,11 +39,3 @@ sendToParty 发送提示文字到[真实组队] [关闭]
 streamenabled 发送提示文字到[代理频道] [关闭]
 
 msgcolour 提示文字颜色为[粉色](FF00DC) 不添加则为默认颜色
-
-------------------------------
-
-编辑 skillid.js
-
-- 可修改对应提示文字内容
-
-- 亦可用 Boss-Skill-Logger 模块查找对应技能 添加技能ID
