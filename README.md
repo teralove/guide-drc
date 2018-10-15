@@ -12,8 +12,38 @@ ccg	(默认开启提示状态)
 
 模仿[AA-Guide] [RK9-Guide] 两个模块制作的攻击提示
 
-目前还需要更多测试!!
+------------------------------
 
-如果使用中有技能提示不准确或者bug
+config.json 中添加一行参数可改变提示文字颜色 如:
 
-请在/8频道 输入 ccg 立即关闭!!
+{
+
+	"enabled": true,
+	
+	"sendToParty": false,
+	
+	"streamenabled": false,
+	
+	"msgcolour" : "FF00DC"
+	
+}
+
+------------------------------
+
+config.json 参数说明:
+
+enabled 模块初始 [启动]
+
+sendToParty 发送提示文字到[真实组队] [关闭]
+
+streamenabled 发送提示文字到[代理频道] [关闭]
+
+msgcolour 提示文字颜色为[粉色](FF00DC) 不添加则为默认颜色
+
+------------------------------
+
+编辑 skillid.js
+
+- 可修改对应提示文字内容
+
+- 亦可用 Boss-Skill-Logger 模块查找对应技能 添加技能ID
