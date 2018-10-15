@@ -188,52 +188,6 @@ module.exports = function CCGuide(d) {				// 定义变量
 					if ( isTank && skillid === 112) return;
 					sendMessage(ThirdBossActions[skillid].msg);
 
-					// 3王 S攻击 横向对称轴
-					if (skillid === 303 || skillid === 306) {
-						Spawnitem(603, 90, 25);
-						Spawnitem(603, 90, 50);
-						Spawnitem(603, 90, 75);
-						Spawnitem(603, 90, 100);
-						Spawnitem(603, 90, 125);
-						Spawnitem(603, 90, 150);
-						Spawnitem(603, 90, 175);
-						Spawnitem(603, 90, 200);
-						Spawnitem(603, 90, 225);
-						Spawnitem(603, 90, 250);
-						Spawnitem(603, 90, 275);
-						Spawnitem(603, 90, 300);
-						Spawnitem(603, 90, 325);
-						Spawnitem(603, 90, 350);
-						Spawnitem(603, 90, 375);
-						Spawnitem(603, 90, 400);
-						Spawnitem(603, 90, 425);
-						Spawnitem(603, 90, 450);
-						Spawnitem(603, 90, 475);
-						Spawnitem(603, 90, 500);
-
-						Spawnitem(603, 270, 25);
-						Spawnitem(603, 270, 50);
-						Spawnitem(603, 270, 75);
-						Spawnitem(603, 270, 100);
-						Spawnitem(603, 270, 125);
-						Spawnitem(603, 270, 150);
-						Spawnitem(603, 270, 175);
-						Spawnitem(603, 270, 200);
-						Spawnitem(603, 270, 225);
-						Spawnitem(603, 270, 250);
-						Spawnitem(603, 270, 275);
-						Spawnitem(603, 270, 300);
-						Spawnitem(603, 270, 325);
-						Spawnitem(603, 270, 350);
-						Spawnitem(603, 270, 375);
-						Spawnitem(603, 270, 400);
-						Spawnitem(603, 270, 425);
-						Spawnitem(603, 270, 450);
-						Spawnitem(603, 270, 475);
-						Spawnitem(603, 270, 500);
-						// 3王 S攻击 光柱+告示牌
-						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
-					}
 					// 3王 S攻击 弧线
 					if (skillid === 303) {
 						bossCurLocation.x = event.loc.x + 250
@@ -280,6 +234,52 @@ module.exports = function CCGuide(d) {				// 定义变量
 						Spawnitem(603, 320, 250);
 						Spawnitem(603, 340, 250);
 						Spawnitem(603, 360, 250);
+					}
+					// 3王 S攻击 横向对称轴
+					if (skillid === 303 || skillid === 306) {
+						Spawnitem(603, 90, 25);
+						Spawnitem(603, 90, 50);
+						Spawnitem(603, 90, 75);
+						Spawnitem(603, 90, 100);
+						Spawnitem(603, 90, 125);
+						Spawnitem(603, 90, 150);
+						Spawnitem(603, 90, 175);
+						Spawnitem(603, 90, 200);
+						Spawnitem(603, 90, 225);
+						Spawnitem(603, 90, 250);
+						Spawnitem(603, 90, 275);
+						Spawnitem(603, 90, 300);
+						Spawnitem(603, 90, 325);
+						Spawnitem(603, 90, 350);
+						Spawnitem(603, 90, 375);
+						Spawnitem(603, 90, 400);
+						Spawnitem(603, 90, 425);
+						Spawnitem(603, 90, 450);
+						Spawnitem(603, 90, 475);
+						Spawnitem(603, 90, 500);
+
+						Spawnitem(603, 270, 25);
+						Spawnitem(603, 270, 50);
+						Spawnitem(603, 270, 75);
+						Spawnitem(603, 270, 100);
+						Spawnitem(603, 270, 125);
+						Spawnitem(603, 270, 150);
+						Spawnitem(603, 270, 175);
+						Spawnitem(603, 270, 200);
+						Spawnitem(603, 270, 225);
+						Spawnitem(603, 270, 250);
+						Spawnitem(603, 270, 275);
+						Spawnitem(603, 270, 300);
+						Spawnitem(603, 270, 325);
+						Spawnitem(603, 270, 350);
+						Spawnitem(603, 270, 375);
+						Spawnitem(603, 270, 400);
+						Spawnitem(603, 270, 425);
+						Spawnitem(603, 270, 450);
+						Spawnitem(603, 270, 475);
+						Spawnitem(603, 270, 500);
+						// 3王 S攻击 光柱+告示牌
+						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
 					}
 					
 				}
