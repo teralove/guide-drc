@@ -190,7 +190,7 @@ module.exports = function CCGuide(d) {				// 定义变量
 
 					// 3王 S攻击 弧线
 					if (skillid === 303) {
-						bossCurLocation.x = event.loc.x + 250
+						bossCurLocation.x = event.loc.x + 250;
 						Spawnitem(603, 20, 250);
 						Spawnitem(603, 40, 250);
 						Spawnitem(603, 60, 250);
@@ -201,7 +201,7 @@ module.exports = function CCGuide(d) {				// 定义变量
 						Spawnitem(603, 160, 250);
 						Spawnitem(603, 180, 250);
 
-						bossCurLocation.x = event.loc.x - 500
+						bossCurLocation.x = event.loc.x - 500;
 						Spawnitem(603, 200, 250);
 						Spawnitem(603, 220, 250);
 						Spawnitem(603, 240, 250);
@@ -211,9 +211,10 @@ module.exports = function CCGuide(d) {				// 定义变量
 						Spawnitem(603, 320, 250);
 						Spawnitem(603, 340, 250);
 						Spawnitem(603, 360, 250);
+						bossCurLocation.x = event.loc.x + 250;
 					}
 					if (skillid === 306) {
-						bossCurLocation.x = event.loc.x - 250
+						bossCurLocation.x = event.loc.x - 250;
 						Spawnitem(603, 20, 250);
 						Spawnitem(603, 40, 250);
 						Spawnitem(603, 60, 250);
@@ -224,7 +225,7 @@ module.exports = function CCGuide(d) {				// 定义变量
 						Spawnitem(603, 160, 250);
 						Spawnitem(603, 180, 250);
 
-						bossCurLocation.x = event.loc.x + 500
+						bossCurLocation.x = event.loc.x + 500;
 						Spawnitem(603, 200, 250);
 						Spawnitem(603, 220, 250);
 						Spawnitem(603, 240, 250);
@@ -234,6 +235,7 @@ module.exports = function CCGuide(d) {				// 定义变量
 						Spawnitem(603, 320, 250);
 						Spawnitem(603, 340, 250);
 						Spawnitem(603, 360, 250);
+						bossCurLocation.x = event.loc.x - 250;
 					}
 					// 3王 S攻击 横向对称轴
 					if (skillid === 303 || skillid === 306) {
