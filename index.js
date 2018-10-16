@@ -28,8 +28,8 @@ const ThirdBossActions = {							// 3王攻击动作
 	109: {msg: '前插(眩晕)'},
 	112: {msg: '后扫(击退)'},
 	301: {msg: '地刺(击飞)'},
-	303: {msg: '→→→→右', sign_degrees:  80, sign_distance: 250},
-	306: {msg: '左←←←←', sign_degrees: 280, sign_distance: 250},
+	303: {msg: '→→→→右', sign_degrees1:  80, sign_distance1: 250, sign_degrees2:  170, sign_distance2: 250},
+	306: {msg: '左←←←←', sign_degrees1: 280, sign_distance1: 250, sign_degrees2:  100, sign_distance2: 250},
 	309: {msg: '注视!!'},
 	315: {msg: '恐惧(吸血)'}
 }
@@ -188,55 +188,6 @@ module.exports = function CCGuide(d) {				// 定义变量
 					if ( isTank && skillid === 112) return;
 					sendMessage(ThirdBossActions[skillid].msg);
 
-					// 3王 S攻击 弧线
-					if (skillid === 303) {
-						bossCurLocation.x = event.loc.x + 250;
-						Spawnitem(603, 20, 250);
-						Spawnitem(603, 40, 250);
-						Spawnitem(603, 60, 250);
-						Spawnitem(603, 80, 250);
-						Spawnitem(603, 100, 250);
-						Spawnitem(603, 120, 250);
-						Spawnitem(603, 140, 250);
-						Spawnitem(603, 160, 250);
-						Spawnitem(603, 180, 250);
-
-						bossCurLocation.x = event.loc.x - 500;
-						Spawnitem(603, 200, 250);
-						Spawnitem(603, 220, 250);
-						Spawnitem(603, 240, 250);
-						Spawnitem(603, 260, 250);
-						Spawnitem(603, 280, 250);
-						Spawnitem(603, 300, 250);
-						Spawnitem(603, 320, 250);
-						Spawnitem(603, 340, 250);
-						Spawnitem(603, 360, 250);
-						bossCurLocation.x = event.loc.x + 250;
-					}
-					if (skillid === 306) {
-						bossCurLocation.x = event.loc.x - 250;
-						Spawnitem(603, 20, 250);
-						Spawnitem(603, 40, 250);
-						Spawnitem(603, 60, 250);
-						Spawnitem(603, 80, 250);
-						Spawnitem(603, 100, 250);
-						Spawnitem(603, 120, 250);
-						Spawnitem(603, 140, 250);
-						Spawnitem(603, 160, 250);
-						Spawnitem(603, 180, 250);
-
-						bossCurLocation.x = event.loc.x + 500;
-						Spawnitem(603, 200, 250);
-						Spawnitem(603, 220, 250);
-						Spawnitem(603, 240, 250);
-						Spawnitem(603, 260, 250);
-						Spawnitem(603, 280, 250);
-						Spawnitem(603, 300, 250);
-						Spawnitem(603, 320, 250);
-						Spawnitem(603, 340, 250);
-						Spawnitem(603, 360, 250);
-						bossCurLocation.x = event.loc.x - 250;
-					}
 					// 3王 S攻击 横向对称轴
 					if (skillid === 303 || skillid === 306) {
 						Spawnitem(603, 90, 25);
@@ -281,7 +232,8 @@ module.exports = function CCGuide(d) {				// 定义变量
 						Spawnitem(603, 270, 475);
 						Spawnitem(603, 270, 500);
 						// 3王 S攻击 光柱+告示牌
-						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
+						SpawnThing(ThirdBossActions[skillid].sign_degrees1, ThirdBossActions[skillid].sign_distance1);
+						SpawnThing(ThirdBossActions[skillid].sign_degrees2, ThirdBossActions[skillid].sign_distance2);
 					}
 					
 				}
