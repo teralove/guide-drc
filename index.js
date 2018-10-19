@@ -28,8 +28,8 @@ const ThirdBossActions = {							// 3王攻击动作
 	109: {msg: '前插(眩晕)'},
 	112: {msg: '后扫(击退)'},
 	301: {msg: '地刺(击飞)'},
-	303: {msg: '→→→→右', sign_degrees:  80, sign_distance: 250},
-	306: {msg: '左←←←←', sign_degrees: 280, sign_distance: 250},
+	303: {msg: '→→→→右', sign_degrees1:  80, sign_distance1: 250, sign_degrees2:  260, sign_distance2: 250},
+	306: {msg: '左←←←←', sign_degrees1: 280, sign_distance1: 250, sign_degrees2:  100, sign_distance2: 250},
 	309: {msg: '注视!!'},
 	315: {msg: '恐惧(吸血)'}
 }
@@ -38,7 +38,6 @@ module.exports = function CCGuide(d) {				// 定义变量
 	let	enabled = config.enabled,					// 模块启动开关
 		sendToParty = config.sendToParty,			// 发送真实组队频道通知
 		streamenabled = config.streamenabled,		// 关闭队长通知, 并将消息发送到代理频道
-		msgcolour = config.msgcolour,				// 通知提示的文字颜色
 
 		isTank = false,								// 坦克职业 / 打手职业
 		insidemap = false,							// 确认进入副本地图
@@ -47,7 +46,7 @@ module.exports = function CCGuide(d) {				// 定义变量
 		whichboss = 0,								// 判定当前是哪个王
 		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
 
-	d.command.add('ccinfo', (arg) => {
+	d.command.add('ccginfo', (arg) => {
 		d.command.message('模块开关: ' + `${enabled}`.clr('00FFFF'));
 		d.command.message('副本地图: ' + insidemap);
 		d.command.message('区域位置: ' + insidezone);
@@ -200,16 +199,6 @@ module.exports = function CCGuide(d) {				// 定义变量
 						Spawnitem(603, 90, 200);
 						Spawnitem(603, 90, 225);
 						Spawnitem(603, 90, 250);
-						Spawnitem(603, 90, 275);
-						Spawnitem(603, 90, 300);
-						Spawnitem(603, 90, 325);
-						Spawnitem(603, 90, 350);
-						Spawnitem(603, 90, 375);
-						Spawnitem(603, 90, 400);
-						Spawnitem(603, 90, 425);
-						Spawnitem(603, 90, 450);
-						Spawnitem(603, 90, 475);
-						Spawnitem(603, 90, 500);
 
 						Spawnitem(603, 270, 25);
 						Spawnitem(603, 270, 50);
@@ -221,18 +210,9 @@ module.exports = function CCGuide(d) {				// 定义变量
 						Spawnitem(603, 270, 200);
 						Spawnitem(603, 270, 225);
 						Spawnitem(603, 270, 250);
-						Spawnitem(603, 270, 275);
-						Spawnitem(603, 270, 300);
-						Spawnitem(603, 270, 325);
-						Spawnitem(603, 270, 350);
-						Spawnitem(603, 270, 375);
-						Spawnitem(603, 270, 400);
-						Spawnitem(603, 270, 425);
-						Spawnitem(603, 270, 450);
-						Spawnitem(603, 270, 475);
-						Spawnitem(603, 270, 500);
 						// 3王 S攻击 光柱+告示牌
-						SpawnThing(ThirdBossActions[skillid].sign_degrees, ThirdBossActions[skillid].sign_distance);
+						SpawnThing(ThirdBossActions[skillid].sign_degrees1, ThirdBossActions[skillid].sign_distance1);
+						SpawnThing(ThirdBossActions[skillid].sign_degrees2, ThirdBossActions[skillid].sign_distance2);
 					}
 					
 				}
@@ -272,10 +252,6 @@ module.exports = function CCGuide(d) {				// 定义变量
 	}
 	// 发送提示文字
 	function sendMessage(msg) {
-		if (msgcolour) {
-			msg = `${msg}`.clr(msgcolour);
-		}
-
 		if (sendToParty) {						// 真实队长通知频道
 			d.toServer('C_CHAT', 1, {
 				channel: 21, 					// 21 = 队长通知, 1 = 组队, 2 = 公会
@@ -323,34 +299,37 @@ module.exports = function CCGuide(d) {				// 定义变量
 	}
 	// 地面提示(光柱+告示牌)
 	function SpawnThing(degrees, radius) { // 偏移角度 半径距离
-		let r = null, rads = null, finalrad = null, pos = null;
+		let r = null, rads = null, finalrad = null, spawnx = null, spawny = null, pos = null;
 
 		r = bossCurAngle - Math.PI;
 		rads = (degrees * Math.PI/180);
 		finalrad = r - rads;
-		bossCurLocation.x = bossCurLocation.x + radius * Math.cos(finalrad);
-		bossCurLocation.y = bossCurLocation.y + radius * Math.sin(finalrad);
+		spawnx = bossCurLocation.x + radius * Math.cos(finalrad);
+		spawny = bossCurLocation.y + radius * Math.sin(finalrad);
+		pos = {x:spawnx, y:spawny};
 		// 告示牌
 		d.toClient('S_SPAWN_BUILD_OBJECT', 2, {
 			gameId : uid1,
 			itemId : 1,
-			loc : bossCurLocation,
+			loc : new Vec3(pos.x, pos.y, bossCurLocation.z),
 			w : r,
 			unk : 0,
 			ownerName : '提示',
 			message : '提示区'
 		});
 
-		bossCurLocation.z = bossCurLocation.z - 100;
 		// 龙头光柱
+		bossCurLocation.z = bossCurLocation.z - 100;
 		d.toClient('S_SPAWN_DROPITEM', 6, {
 			gameId: uid2,
-			loc: bossCurLocation,
+			loc: new Vec3(pos.x, pos.y, bossCurLocation.z),
 			item: 98260,
 			amount: 1,
 			expiry: 6000,
 			owners: [{playerId: uid2}]
 		});
+		bossCurLocation.z = bossCurLocation.z + 100;
+
 		// 延迟消除
 		setTimeout(DespawnThing, 5000, uid1, uid2);
 		uid1--;
