@@ -34,7 +34,7 @@ const ThirdBossActions = {							// 3王攻击动作
 	315: {msg: '恐惧(吸血)'}
 }
 
-module.exports = function CCGuide(d) {				// 定义变量
+module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 	let	enabled = config.enabled,					// 模块启动开关
 		sendToParty = config.sendToParty,			// 发送真实组队频道通知
 		streamenabled = config.streamenabled,		// 关闭队长通知, 并将消息发送到代理频道
@@ -46,22 +46,13 @@ module.exports = function CCGuide(d) {				// 定义变量
 		whichboss = 0,								// 判定当前是哪个王
 		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
 
-	d.command.add('ccginfo', (arg) => {
-		d.command.message('模块开关: ' + `${enabled}`.clr('00FFFF'));
-		d.command.message('副本地图: ' + insidemap);
-		d.command.message('区域位置: ' + insidezone);
-		d.command.message('副本难度: ' + whichmode);
-		d.command.message('副本首领: ' + whichboss);
-		d.command.message('发送通知 ' + (sendToParty ? '真实组队'.clr('56B4E9') : '仅自己见'.clr('E69F00')));
-		d.command.message('职业分类 ' + (isTank ? '坦克'.clr('00FFFF') : '打手'.clr('FF0000')));
-		sendMessage('test');
-	})
-	d.command.add('ccg', (arg) => {
+	d.command.add('dguide', (arg) => {
 		if (!arg) {
 			enabled = !enabled;
 			d.command.message('辅助提示 ' + (enabled ? '启用'.clr('56B4E9') : '禁用'.clr('E69F00')));
 		} else {
 			switch (arg) {
+				case "p":
 				case "party":
 					sendToParty = !sendToParty;
 					d.command.message('发送通知 ' + (sendToParty ? '组队'.clr('56B4E9') : '自己'.clr('E69F00')));
@@ -69,6 +60,16 @@ module.exports = function CCGuide(d) {				// 定义变量
 				case "proxy":
 					streamenabled = !streamenabled;
 					d.command.message('代理频道 ' + (streamenabled ? '启用'.clr('56B4E9') : '禁用'.clr('E69F00')));
+					break;
+				case "debug":
+					d.command.message('模块开关: ' + `${enabled}`.clr('00FFFF'));
+					d.command.message('副本地图: ' + insidemap);
+					d.command.message('区域位置: ' + insidezone);
+					d.command.message('副本难度: ' + whichmode);
+					d.command.message('副本首领: ' + whichboss);
+					d.command.message('发送通知 ' + (sendToParty ? '真实组队'.clr('56B4E9') : '仅自己见'.clr('E69F00')));
+					d.command.message('职业分类 ' + (isTank ? '坦克'.clr('00FFFF') : '打手'.clr('FF0000')));
+					sendMessage('test');
 					break;
 				default :
 					d.command.message('无效的参数!'.clr('FF0000'));
@@ -261,7 +262,7 @@ module.exports = function CCGuide(d) {				// 定义变量
 			d.command.message(msg);
 		} else {
 			d.toClient('S_CHAT', 2, {			// 虚拟队长通知频道
-				channel: 21, 					// 21 = 队长通知, 1 = 组队
+				channel: 21, 					// 21 = 队长通知, 1 = 组队, 25 = 团长通知
 				authorName: 'DG-Guide',
 				message: msg
 			});

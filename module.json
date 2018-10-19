@@ -1,7 +1,7 @@
 {
 	"disableAutoUpdate": false,
 	"options": {
-		"niceName": "CC-Guide"
+		"niceName": "DRC-Guide"
 	},
-	"servers": ["https://raw.githubusercontent.com/zc149352394/CC-Guide/master/"]
+	"servers": ["https://raw.githubusercontent.com/zc149352394/DRC-Guide/master/"]
 }
