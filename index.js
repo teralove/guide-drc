@@ -46,7 +46,7 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 		whichboss = 0,								// 判定当前是哪个王
 		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
 
-	d.command.add('dguide', (arg) => {
+	d.command.add('drc', (arg) => {
 		if (!arg) {
 			enabled = !enabled;
 			d.command.message('辅助提示 ' + (enabled ? '启用'.clr('56B4E9') : '禁用'.clr('E69F00')));
