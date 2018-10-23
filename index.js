@@ -7,31 +7,31 @@ const BossID = [1000, 2000, 3000];					// 大型怪物 templateId 区分副本 1
 // 获取配置文档数据
 const config = require('./config.json');
 const FirstBossActions = {							// 1王攻击动作
-	108: {msg: '后跳(眩晕)'},
-	109: {msg: '后扫(击退)'},
-	119: {msg: '蓄力捶地'},
-	127: {msg: '雷电!!'}
+	108: {msg: 'Dodge!! (Jump stun)'},
+	109: {msg: 'Pushback'},
+	119: {msg: 'Powerful land'},
+	127: {msg: 'Thunder!!'}
 };
 const SecondBossActions = {							// 2王攻击动作
 //	105: {msg: '点名(击飞)'},
-	110: {msg: '前砸(闪避)'},
-	111: {msg: '右后踢(击退)'},
-	115: {msg: '左后踢(击退)'},
-	119: {msg: '跳跃(眩晕)'},
-	120: {msg: '前拳+后踢(击退)'},
-	316: {msg: '火焰(爆炸)'},
-	317: {msg: '水波(击飞)'},
-	318: {msg: '地毯(眩晕)'}
+	110: {msg: 'Front smash (dodge)'},
+	111: {msg: 'Right kick'},
+	115: {msg: 'Left kick'},
+	119: {msg: 'Dodge!! (Jump stun)'},
+	120: {msg: 'Punch + kick'},
+	316: {msg: 'Fire AoE!!'},
+	317: {msg: 'Water AoE!!'},
+	318: {msg: 'Grass AoE!!'}
 };
 const ThirdBossActions = {							// 3王攻击动作
-	106: {msg: '前推(击退)'},
-	109: {msg: '前插(眩晕)'},
-	112: {msg: '后扫(击退)'},
-	301: {msg: '地刺(击飞)'},
-	303: {msg: '→→→→右', sign_degrees1:  80, sign_distance1: 250, sign_degrees2:  260, sign_distance2: 250},
-	306: {msg: '左←←←←', sign_degrees1: 280, sign_distance1: 250, sign_degrees2:  100, sign_distance2: 250},
-	309: {msg: '注视!!'},
-	315: {msg: '恐惧(吸血)'}
+	106: {msg: 'Front push!!'},
+	109: {msg: 'Dodge!! (Stuns)'},
+	112: {msg: 'Pushback!!'},
+	301: {msg: 'Dodge!! (Spikes)'},
+	303: {msg: '→→ Right →→', sign_degrees1:  80, sign_distance1: 250, sign_degrees2:  260, sign_distance2: 250},
+	306: {msg: '←← Left ←←', sign_degrees1: 280, sign_distance1: 250, sign_degrees2:  100, sign_distance2: 250},
+	309: {msg: 'Demon gaze!!'},
+	315: {msg: 'Dodge + Get OUT'}
 }
 
 module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
@@ -45,34 +45,33 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 		whichmode = 0,								// 确认副本上/下级
 		whichboss = 0,								// 判定当前是哪个王
 		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
-
+	
+	d.command.add('ccinfo', (arg) => {
+		d.command.message('enabled: ' + `${enabled}`.clr('00FFFF'));
+		d.command.message('insidemap: ' + insidemap);
+		d.command.message('insidezone: ' + insidezone);
+		d.command.message('whichmode: ' + whichmode);
+		d.command.message('whichboss: ' + whichboss);
+		d.command.message('sendToParty: ' + (sendToParty ? 'Send to party'.clr('56B4E9') : 'Only you see'.clr('E69F00')));
+		d.command.message('tankMode: ' + (isTank ? 'true'.clr('00FFFF') : 'false'.clr('FF0000')));
+		sendMessage('test');
+	})
 	d.command.add('drc', (arg) => {
 		if (!arg) {
 			enabled = !enabled;
-			d.command.message('辅助提示 ' + (enabled ? '启用'.clr('56B4E9') : '禁用'.clr('E69F00')));
+			d.command.message('Enabled: ' + (enabled ? 'true'.clr('56B4E9') : 'false'.clr('E69F00')));
 		} else {
 			switch (arg) {
-				case "p":
 				case "party":
 					sendToParty = !sendToParty;
-					d.command.message('发送通知 ' + (sendToParty ? '组队'.clr('56B4E9') : '自己'.clr('E69F00')));
+					d.command.message('Sent to party: ' + (sendToParty ? 'true'.clr('56B4E9') : 'false'.clr('E69F00')));
 					break;
 				case "proxy":
 					streamenabled = !streamenabled;
-					d.command.message('代理频道 ' + (streamenabled ? '启用'.clr('56B4E9') : '禁用'.clr('E69F00')));
-					break;
-				case "debug":
-					d.command.message('模块开关: ' + `${enabled}`.clr('00FFFF'));
-					d.command.message('副本地图: ' + insidemap);
-					d.command.message('区域位置: ' + insidezone);
-					d.command.message('副本难度: ' + whichmode);
-					d.command.message('副本首领: ' + whichboss);
-					d.command.message('发送通知 ' + (sendToParty ? '真实组队'.clr('56B4E9') : '仅自己见'.clr('E69F00')));
-					d.command.message('职业分类 ' + (isTank ? '坦克'.clr('00FFFF') : '打手'.clr('FF0000')));
-					sendMessage('test');
+					d.command.message('Stream mode: ' + (streamenabled ? 'true'.clr('56B4E9') : 'false'.clr('E69F00')));
 					break;
 				default :
-					d.command.message('无效的参数!'.clr('FF0000'));
+					d.command.message('Invalid argument!'.clr('FF0000'));
 					break;
 			}
 		}
@@ -93,11 +92,11 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 	function sLoadTopo(event) {
 		if (event.zone === mapID[0]) {
 			insidemap = true;
-			d.command.message('进入副本: ' + '泰内布利斯城堡 '.clr('56B4E9') + '[下级]'.clr('E69F00'));
+			d.command.message('Welcome to ' + 'Dark Reach Citadel '.clr('56B4E9') + '[NM]'.clr('E69F00'));
 			load();
 		} else if (event.zone === mapID[1]) {
 			insidemap = true;
-			d.command.message('进入副本: ' + '泰内布利斯城堡 '.clr('56B4E9') + '[上级]'.clr('00FFFF'));
+			d.command.message('Welcome to ' + 'Dark Reach Citadel '.clr('56B4E9') + '[HM]'.clr('00FFFF'));
 			load();
 		} else {
 			unload();
@@ -200,6 +199,16 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 						Spawnitem(603, 90, 200);
 						Spawnitem(603, 90, 225);
 						Spawnitem(603, 90, 250);
+						// Spawnitem(603, 90, 275);
+						// Spawnitem(603, 90, 300);
+						// Spawnitem(603, 90, 325);
+						// Spawnitem(603, 90, 350);
+						// Spawnitem(603, 90, 375);
+						// Spawnitem(603, 90, 400);
+						// Spawnitem(603, 90, 425);
+						// Spawnitem(603, 90, 450);
+						// Spawnitem(603, 90, 475);
+						// Spawnitem(603, 90, 500);
 
 						Spawnitem(603, 270, 25);
 						Spawnitem(603, 270, 50);
@@ -211,6 +220,16 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 						Spawnitem(603, 270, 200);
 						Spawnitem(603, 270, 225);
 						Spawnitem(603, 270, 250);
+						// Spawnitem(603, 270, 275);
+						// Spawnitem(603, 270, 300);
+						// Spawnitem(603, 270, 325);
+						// Spawnitem(603, 270, 350);
+						// Spawnitem(603, 270, 375);
+						// Spawnitem(603, 270, 400);
+						// Spawnitem(603, 270, 425);
+						// Spawnitem(603, 270, 450);
+						// Spawnitem(603, 270, 475);
+						// Spawnitem(603, 270, 500);
 						// 3王 S攻击 光柱+告示牌
 						SpawnThing(ThirdBossActions[skillid].sign_degrees1, ThirdBossActions[skillid].sign_distance1);
 						SpawnThing(ThirdBossActions[skillid].sign_degrees2, ThirdBossActions[skillid].sign_distance2);
@@ -225,7 +244,7 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 				if (whichboss==1) {
 					// 9783103下级触发; 9983103上级触发
 					if (sDungeonEventMessage === 9783103 || sDungeonEventMessage === 9983103) {
-						sendMessage('100能量鉴定!!');
+						sendMessage('100 energy!!');
 					}
 				}
 			}
@@ -253,6 +272,7 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 	}
 	// 发送提示文字
 	function sendMessage(msg) {
+
 		if (sendToParty) {						// 真实队长通知频道
 			d.toServer('C_CHAT', 1, {
 				channel: 21, 					// 21 = 队长通知, 1 = 组队, 2 = 公会
@@ -262,7 +282,7 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 			d.command.message(msg);
 		} else {
 			d.toClient('S_CHAT', 2, {			// 虚拟队长通知频道
-				channel: 21, 					// 21 = 队长通知, 1 = 组队, 25 = 团长通知
+				channel: 21, 					// 21 = 队长通知, 1 = 组队
 				authorName: 'DG-Guide',
 				message: msg
 			});
@@ -283,7 +303,7 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 			gameId : uid0,
 			id : item,
 			amount : 1,
-			loc : new Vec3(pos.x, pos.y, bossCurLocation.z),
+            loc : new Vec3(pos.x, pos.y, bossCurLocation.z),
 			w : r,
 			unk1 : 0,
 			unk2 : 0
@@ -305,22 +325,22 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 		r = bossCurAngle - Math.PI;
 		rads = (degrees * Math.PI/180);
 		finalrad = r - rads;
-		spawnx = bossCurLocation.x + radius * Math.cos(finalrad);
-		spawny = bossCurLocation.y + radius * Math.sin(finalrad);
-		pos = {x:spawnx, y:spawny};
+        spawnx = bossCurLocation.x + radius * Math.cos(finalrad);
+        spawny = bossCurLocation.y + radius * Math.sin(finalrad);
+        pos = {x:spawnx, y:spawny};
 		// 告示牌
 		d.toClient('S_SPAWN_BUILD_OBJECT', 2, {
 			gameId : uid1,
 			itemId : 1,
-			loc : new Vec3(pos.x, pos.y, bossCurLocation.z),
+			loc : bossCurLocation,
 			w : r,
 			unk : 0,
-			ownerName : '提示',
-			message : '提示区'
+			ownerName : 'prompt',
+			message : 'safe spot?'
 		});
 
-		// 龙头光柱
 		bossCurLocation.z = bossCurLocation.z - 100;
+		// 龙头光柱
 		d.toClient('S_SPAWN_DROPITEM', 6, {
 			gameId: uid2,
 			loc: new Vec3(pos.x, pos.y, bossCurLocation.z),
@@ -329,8 +349,8 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 			expiry: 6000,
 			owners: [{playerId: uid2}]
 		});
-		bossCurLocation.z = bossCurLocation.z + 100;
-
+        bossCurLocation.z = bossCurLocation.z + 100;
+				
 		// 延迟消除
 		setTimeout(DespawnThing, 5000, uid1, uid2);
 		uid1--;
