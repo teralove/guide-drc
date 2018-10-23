@@ -46,16 +46,6 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 		whichboss = 0,								// 判定当前是哪个王
 		hooks = [], bossCurLocation, bossCurAngle, uid0 = 999999999, uid1 = 899999999, uid2 = 799999999;
 	
-	d.command.add('ccinfo', (arg) => {
-		d.command.message('enabled: ' + `${enabled}`.clr('00FFFF'));
-		d.command.message('insidemap: ' + insidemap);
-		d.command.message('insidezone: ' + insidezone);
-		d.command.message('whichmode: ' + whichmode);
-		d.command.message('whichboss: ' + whichboss);
-		d.command.message('sendToParty: ' + (sendToParty ? 'Send to party'.clr('56B4E9') : 'Only you see'.clr('E69F00')));
-		d.command.message('tankMode: ' + (isTank ? 'true'.clr('00FFFF') : 'false'.clr('FF0000')));
-		sendMessage('test');
-	})
 	d.command.add('drc', (arg) => {
 		if (!arg) {
 			enabled = !enabled;
@@ -334,7 +324,7 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 		d.toClient('S_SPAWN_BUILD_OBJECT', 2, {
 			gameId : uid1,
 			itemId : 1,
-			loc : bossCurLocation,
+			loc: new Vec3(pos.x, pos.y, bossCurLocation.z),
 			w : r,
 			unk : 0,
 			ownerName : 'prompt',
