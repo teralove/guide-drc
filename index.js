@@ -7,7 +7,7 @@ const BossID = [1000, 2000, 3000];					// 大型怪物 templateId 区分副本 1
 // 获取配置文档数据
 const config = require('./config.json');
 const FirstBossActions = {							// 1王攻击动作
-	108: {msg: 'Dodge!! (Jump stun)'},
+	108: {msg: 'Dodge!!'},
 	109: {msg: 'Pushback'},
 	119: {msg: 'Powerful land'},
 	127: {msg: 'Thunder!!'}
@@ -17,19 +17,19 @@ const SecondBossActions = {							// 2王攻击动作
 	110: {msg: 'Front smash (dodge)'},
 	111: {msg: 'Right kick'},
 	115: {msg: 'Left kick'},
-	119: {msg: 'Dodge!! (Jump stun)'},
+	119: {msg: 'Dodge!!'},
 	120: {msg: 'Punch + kick'},
 	316: {msg: 'Fire AoE!!'},
-	317: {msg: 'Water AoE!!'},
-	318: {msg: 'Grass AoE!!'}
+	317: {msg: 'Dodge!! (Water AoE)'},
+	318: {msg: 'Dodge!! (Grass AoE)'}
 };
 const ThirdBossActions = {							// 3王攻击动作
 	106: {msg: 'Front push!!'},
-	109: {msg: 'Dodge!! (Stuns)'},
+	109: {msg: 'Dodge!!'},
 	112: {msg: 'Pushback!!'},
 	301: {msg: 'Dodge!! (Spikes)'},
-	303: {msg: '→→ Right →→', sign_degrees1:  80, sign_distance1: 250, sign_degrees2:  260, sign_distance2: 250},
-	306: {msg: '←← Left ←←', sign_degrees1: 280, sign_distance1: 250, sign_degrees2:  100, sign_distance2: 250},
+	303: {msg: '→→ Go Right →→', sign_degrees1:  80, sign_distance1: 250, sign_degrees2:  260, sign_distance2: 250},
+	306: {msg: '←← Go Left ←←', sign_degrees1: 280, sign_distance1: 250, sign_degrees2:  100, sign_distance2: 250},
 	309: {msg: 'Demon gaze!!'},
 	315: {msg: 'Dodge + Get OUT'}
 }
@@ -290,6 +290,7 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 	}
 	//地面提示(花朵)
 	function Spawnitem(item, degrees, radius) { //显示物品 偏移角度 半径距离
+		if (streamenabled) return;
 		let r = null, rads = null, finalrad = null, spawnx = null, spawny = null, pos = null;
 
 		r = bossCurAngle - Math.PI;
@@ -320,6 +321,7 @@ module.exports = function DarkReachCitadelGuide(d) {				// 定义变量
 	}
 	// 地面提示(光柱+告示牌)
 	function SpawnThing(degrees, radius) { // 偏移角度 半径距离
+		if (streamenabled) return;
 		let r = null, rads = null, finalrad = null, spawnx = null, spawny = null, pos = null;
 
 		r = bossCurAngle - Math.PI;
